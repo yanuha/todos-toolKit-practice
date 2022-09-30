@@ -6,6 +6,7 @@ import {
   selectActiveFilters,
   toggleTodo,
   setFilters,
+  resetToDefault,
 } from './store';
 
 export default function App() {
@@ -15,9 +16,15 @@ export default function App() {
       <NewTodo />
       <FilterTodo />
       <TodoList />
+      <ResetToDefaultButton />
     </div>
   );
 }
+
+const ResetToDefaultButton = () => {
+  const dispatch = useDispatch();
+  return <button onClick={() => dispatch(resetToDefault())}>Reset</button>;
+};
 
 const NewTodo = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,11 @@
-import { nanoid, createSlice, configureStore } from '@reduxjs/toolkit';
+import {
+  nanoid,
+  createSlice,
+  configureStore,
+  createAction,
+} from '@reduxjs/toolkit';
+
+export const resetToDefault = createAction('@@root/resetApp');
 
 const todoSlice = createSlice({
   name: '@@todos',
@@ -26,6 +33,11 @@ const todoSlice = createSlice({
       todo.completed = !todo.completed;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(resetToDefault, () => {
+      return [];
+    });
+  },
 });
 
 const filtersSlice = createSlice({
@@ -35,6 +47,11 @@ const filtersSlice = createSlice({
     setFilters: (_, action) => {
       return action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(resetToDefault, () => {
+      return 'all';
+    });
   },
 });
 
