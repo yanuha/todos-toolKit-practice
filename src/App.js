@@ -1,9 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
-import { addTodo, removeTodo, selectVisibleTodos, toggleTodo } from "./store";
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addTodo,
+  removeTodo,
+  selectVisibleTodos,
+  selectActiveFilters,
+  toggleTodo,
+  setFilters,
+} from './store';
 
 export default function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Hello Redux Todo</h1>
       <NewTodo />
       <FilterTodo />
@@ -23,14 +30,15 @@ const NewTodo = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="title" placeholder="new todo" />
-      <input type="submit" value="Add Todo" />
+      <input type='text' name='title' placeholder='new todo' />
+      <input type='submit' value='Add Todo' />
     </form>
   );
 };
 
 const TodoList = () => {
-  const todos = useSelector(state => state.todos);
+  const activeFilter = useSelector(selectActiveFilters);
+  const todos = useSelector((state) => selectVisibleTodos(state, activeFilter));
   const dispatch = useDispatch();
 
   return (
@@ -38,11 +46,11 @@ const TodoList = () => {
       {todos.map((todo) => (
         <li key={todo.id}>
           <input
-            type="checkbox"
+            type='checkbox'
             checked={todo.completed}
             onChange={() => dispatch(toggleTodo(todo.id))}
-          />{" "}
-          {todo.title}{" "}
+          />{' '}
+          {todo.title}{' '}
           <button onClick={() => dispatch(removeTodo(todo.id))}>delete</button>
         </li>
       ))}
@@ -51,11 +59,31 @@ const TodoList = () => {
 };
 
 const FilterTodo = () => {
+  const activeFilter = useSelector(selectActiveFilters);
+  const dispatch = useDispatch();
+
+  const handleFilter = (val) => dispatch(setFilters(val));
+
   return (
     <div>
-      <button>all</button>
-      <button>active</button>
-      <button>completed</button>
+      <button
+        onClick={() => handleFilter('all')}
+        style={{ color: activeFilter === 'all' ? 'red' : null }}
+      >
+        all
+      </button>
+      <button
+        onClick={() => handleFilter('active')}
+        style={{ color: activeFilter === 'active' ? 'red' : null }}
+      >
+        active
+      </button>
+      <button
+        onClick={() => handleFilter('completed')}
+        style={{ color: activeFilter === 'completed' ? 'red' : null }}
+      >
+        completed
+      </button>
     </div>
   );
-}
+};
