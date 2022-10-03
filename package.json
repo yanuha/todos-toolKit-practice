@@ -11,6 +11,8 @@
     "redux-persist": "^6.0.0"
   },
   "scripts": {
+    "server": "json-server -w db.json -p 3001",
+    "dev": "concurrently \"yarn run server\" \"yarn start\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -33,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "json-server": "^0.17.0"
   }
 }
