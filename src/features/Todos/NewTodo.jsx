@@ -1,14 +1,16 @@
 import { useDispatch } from 'react-redux';
 
-import { addTodo } from './todo-slices';
+import { createTodo } from './todo-slices';
 
 export const NewTodo = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addTodo(event.target.title.value));
-    event.target.reset();
+    if (event.target.title.value) {
+      dispatch(createTodo(event.target.title.value));
+      event.target.reset();
+    }
   };
 
   return (
