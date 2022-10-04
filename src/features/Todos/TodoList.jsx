@@ -16,7 +16,9 @@ export const TodoList = () => {
   const { error, loading } = useSelector((state) => state.todos);
 
   useEffect(() => {
-    dispatch(loadTodos())
+    const promise = dispatch(loadTodos());
+
+    promise
       .unwrap()
       .then(() => {
         toast('All todos were loaded');
@@ -24,6 +26,10 @@ export const TodoList = () => {
       .catch(() => {
         toast('Error!');
       });
+
+    return () => {
+      promise.abort();
+    };
   }, [dispatch]);
 
   return (

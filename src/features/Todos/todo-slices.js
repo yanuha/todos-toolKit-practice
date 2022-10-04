@@ -5,13 +5,23 @@ export const loadTodos = createAsyncThunk(
   '@@todos/load-todo',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await fetch('http://localhost:3005/todos');
+      const res = await fetch('http://localhost:3001/todos');
       const data = await res.json();
 
       return data;
     } catch (err) {
       return rejectWithValue('Failed to fetch all todos.');
     }
+  },
+  {
+    condition: (_, { getState, extra }) => {
+      const { loading } = getState().todos;
+
+      if (loading === 'loading') {
+        console.log('loading');
+        return false;
+      }
+    },
   }
 );
 
