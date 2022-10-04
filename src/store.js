@@ -15,6 +15,8 @@ import storage from 'redux-persist/lib/storage';
 import { todosReducer } from './features/Todos/todo-slices';
 import { filtersReducer } from './features/Filters/filter-slice';
 
+import * as api from './api';
+
 const rootReducer = combineReducers({
   todos: todosReducer,
   filters: filtersReducer,
@@ -32,6 +34,9 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
