@@ -30,7 +30,7 @@ export const TodoList = () => {
     <>
       <ToastContainer />
       <ul>
-        {error && <h3>Error!</h3>}
+        {error && <h3>{error}</h3>}
         {loading === 'loading' && <h4>Loading...</h4>}
         {!error &&
           loading === 'idle' &&
