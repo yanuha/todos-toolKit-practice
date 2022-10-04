@@ -78,6 +78,7 @@ export const todosSlice = createSlice({
         state.error = 'Something want wrong!';
       })
       .addCase(loadTodos.fulfilled, (state, action) => {
+        state.loading = 'idle';
         state.entities = action.payload;
       })
       .addCase(createTodo.fulfilled, (state, action) => {

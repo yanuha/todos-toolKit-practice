@@ -24,11 +24,6 @@
       "id": 5,
       "title": "Something new",
       "completed": true
-    },
-    {
-      "title": "3",
-      "completed": false,
-      "id": 13
     }
   ]
 }
