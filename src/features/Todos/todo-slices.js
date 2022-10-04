@@ -69,16 +69,16 @@ export const todosSlice = createSlice({
       // .addCase(resetToDefault, () => {
       //   return initialState;
       // })
-      .addCase(loadTodos.pending, (state) => {
-        state.loading = 'loading';
-        state.error = null;
-      })
-      .addCase(loadTodos.rejected, (state) => {
-        state.loading = 'idle';
-        state.error = 'Something want wrong!';
-      })
+      // .addCase(loadTodos.pending, (state) => {
+      //   state.loading = 'loading';
+      //   state.error = null;
+      // })
+      // .addCase(loadTodos.rejected, (state) => {
+      //   state.loading = 'idle';
+      //   state.error = 'Something want wrong!';
+      // })
       .addCase(loadTodos.fulfilled, (state, action) => {
-        state.loading = 'idle';
+        // state.loading = 'idle';
         state.entities = action.payload;
       })
       .addCase(createTodo.fulfilled, (state, action) => {
@@ -93,7 +93,27 @@ export const todosSlice = createSlice({
         state.entities = state.entities.filter(
           (todo) => todo.id !== action.payload
         );
-      });
+      })
+      .addMatcher(
+        (action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.loading = 'loading';
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state) => {
+          state.loading = 'idle';
+          state.error = 'ERORR!';
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state) => {
+          state.loading = 'idle';
+        }
+      );
   },
 });
 
