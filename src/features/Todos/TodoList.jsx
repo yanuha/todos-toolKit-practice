@@ -7,11 +7,18 @@ import {
   selectVisibleTodos,
   selectActiveFilters,
 } from '../Filters/filter-slice';
-import { toggleTodo, removeTodo, loadTodos } from './todo-slices';
+import {
+  toggleTodo,
+  removeTodo,
+  loadTodos,
+  todosSelectors,
+} from './todo-slices';
 
 export const TodoList = () => {
   const activeFilter = useSelector(selectActiveFilters);
-  const todos = useSelector((state) => selectVisibleTodos(state, activeFilter));
+  // const todos = useSelector((state) => selectVisibleTodos(state, activeFilter));
+  const todos = useSelector(todosSelectors.selectAll);
+  const visibleTodos = selectVisibleTodos(todos, activeFilter);
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.todos);
 
@@ -40,8 +47,8 @@ export const TodoList = () => {
         {loading === 'loading' && <h4>Loading...</h4>}
         {!error &&
           loading === 'idle' &&
-          todos &&
-          todos.map((todo) => (
+          visibleTodos &&
+          visibleTodos.map((todo) => (
             <li key={todo.id}>
               <input
                 type='checkbox'

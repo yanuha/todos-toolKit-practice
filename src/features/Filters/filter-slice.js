@@ -20,19 +20,20 @@ export const { setFilters } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
 
 export const selectActiveFilters = (state) => state.filters;
-export const selectVisibleTodos = (state, filter) => {
+
+export const selectVisibleTodos = (todos, filter) => {
   switch (filter) {
     case 'all': {
-      return state.todos.entities;
+      return todos;
     }
     case 'active': {
-      return state.todos.entities.filter((todo) => !todo.completed);
+      return todos.filter((todo) => !todo.completed);
     }
     case 'completed': {
-      return state.todos.entities.filter((todo) => todo.completed);
+      return todos.filter((todo) => todo.completed);
     }
     default: {
-      return state.todos;
+      return todos;
     }
   }
 };
